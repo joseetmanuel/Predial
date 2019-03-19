@@ -1,0 +1,5 @@
+@import "~@material/dialog/dist/mdc.dialog.min.css";
+@import "~@material/button/dist/mdc.button.css";
+.select {
+    width: 400px;
+}

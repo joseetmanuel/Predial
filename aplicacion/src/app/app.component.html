@@ -1,0 +1,182 @@
+<mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
+<app-layout>
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-form-field class="select">
+                <input matInput placeholder="Municipio" value="112 - ZITACUARO" disabled>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-form-field class="select">
+                <mat-select placeholder="Localidad/Oficina" [(value)]="localidadSelect">
+                    <mat-option *ngFor="let localidad of localidades" [value]="localidad.value">
+                        {{localidad.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-form-field class="select">
+                <mat-select placeholder="Tipo de Predio" [(value)]="predioSelect">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+                        {{tipo.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-form-field class="select">
+                <input matInput placeholder="Número de registro" [formControl]="registro" [(ngModel)]="registroNumber">
+                <mat-error *ngIf="registro.hasError('required')">
+                    El número de registro es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-form-field class="select">
+                <input matInput placeholder="Apellido Paterno del Propietario o Razón Social" [formControl]="razonSocial" [(ngModel)]="razon">
+                <mat-error *ngIf="razonSocial.hasError('required')">
+                    El apellido paterno del propietario o razón social es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-slide-toggle [(ngModel)]="moral">Seleccionar si es persona moral</mat-slide-toggle>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6" style="text-align: right">
+            <button mat-raised-button color="primary" (click)="Consulta()">Consultar</button>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-4 col-lg-6" style="text-align: right">
+        </div>
+    </div>
+
+    <div *ngIf="resultado">
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Apellido Paterno" [value]="resultado.apat" disabled>
+
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Apellido Materno" [value]="resultado.amat" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Nombre" [value]="resultado.nomb" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Ubicacion" [value]="resultado.ubic" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Localidad" [value]="resultado.loca" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Oficina" [value]="resultado.ofna" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Tipo Predio" [value]="resultado.tpre" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Número de Registro" [value]="resultado.nreg" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="C. Predio" [value]="resultado.cpre" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="select">
+                    <input matInput placeholder="Total" [value]="resultado.total" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                &nbsp;&nbsp;
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5">
+                <mat-form-field class="select">
+                    <input matInput placeholder="comisión" [value]="comision" disabled>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-5">
+                <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            &nbsp;&nbsp;
+        </div>
+    </div>
+</app-layout>
+<div class="mdc-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
+    <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+            <h2 class="mdc-dialog__title" id="my-dialog-title">{{titErr}}</h2>
+            <div class="mdc-dialog__content" id="my-dialog-content">
+                {{msgErr}}
+            </div>
+            <footer class="mdc-dialog__actions">
+                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+              <span class="mdc-button__label">ok</span>
+            </button>
+            </footer>
+        </div>
+    </div>
+    <div class="mdc-dialog__scrim"></div>
+</div>

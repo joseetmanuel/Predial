@@ -1,0 +1,12 @@
+.fa-heart {
+    color: hotpink;
+}
+
+nav,
+a {
+    height: 15px;
+    font-size: 8px;
+    margin: 0px;
+    padding: 0px;
+    color: aliceblue;
+}
